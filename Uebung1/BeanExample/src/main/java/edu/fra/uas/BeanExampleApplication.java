@@ -1,12 +1,23 @@
 package edu.fra.uas;
 
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import ch.qos.logback.classic.Logger;
+import edu.fra.uas.service.MessageService;
+import edu.fra.uas.controller.BeanController;
+
 @SpringBootApplication
 public class BeanExampleApplication {
+
+	private static final Logger log =(Logger) LoggerFactory.getLogger(BeanExampleApplication.class);
+	
+	@Autowired //Dadurch wird gesagt dass das ein Bean ist
+	private BeanController beanController;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BeanExampleApplication.class, args);
@@ -17,7 +28,14 @@ public class BeanExampleApplication {
 		CommandLineRunner action = new CommandLineRunner() {
 			@Override
 			public void run(String... args) throws Exception {
-				System.out.println("Hello World!");
+				log.debug(beanController.putMessage("Hallo Welt"));
+				log.debug(beanController.putMessage("--> OOOHOO <--"));
+				
+				
+				
+				//System.out.println("Hello World!");
+				//messageService.setMessage("This is a message from MessageService.");
+				//System.out.println(messageService.getMessage());
 			}
 		};
 		return action;
